@@ -10,8 +10,13 @@ window.addEventListener('load', function () {
     let book = document.createElement('div')
     book.id = "bookInfo"
     const bookTitle = document.createElement('span');
+    bookTitle.id = "title";
     const bookAuthor = document.createElement('span');
+    bookAuthor.id = "author";
     const bookPublished = document.createElement('span');
+    bookPublished.id = "year";
+    const bookCover = document.createElement('span');
+    bookCover.id = "cover";
 
     // When Search Button is Clicked
     button.onclick = function () {
@@ -51,17 +56,27 @@ window.addEventListener('load', function () {
                 book.appendChild(bookAuthor);
                 book.appendChild(bookPublished);
 
+                const newImage = document.createElement('img');
+                newImage.src = `https://covers.openlibrary.org/b/id/${data.docs[0].cover_i}-L.jpg`;
+                bookCover.appendChild(newImage);
+
+                book.appendChild(bookCover);
+
+
                 document.body.append(book);
             })
-            .catch(error => alert(error));
-    }
+            .catch(error => alert("Could not find a book with this name."));
 
+
+        // const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&apikey=6a9680f`);
+        // moviePromise
+        // .then(res => {return res.json()})
+        // .then(data => console.log(data.Search));
+    }
 });
 
-// API for getting movies (I only get 1000 a day so it's not implemented)
 
-// const moviePromise = fetch(`http://www.omdbapi.com/?s=${book}&apikey=6a9680f`);
-// moviePromise
-// .then(res => { return res.json() })
-// .then(data => console.log(data.Search));
+const cardMaker = (Obj) => {
+
+}
 
