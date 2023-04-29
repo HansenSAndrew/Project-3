@@ -13,10 +13,25 @@
 		<h1>Book and Movie Search</h1>
 	</header>
 	<body>
+		<section class="search-type">
+			<h2>Search Type</h2>
+			<select name="search-type" id="search-type">
+				<option value="book">Book</option>
+				<option value="movie">Movie</option>
+				<option value="TV-Show">TV Show</option>
+			</select>
+			To
+			<select name="search-type" id="search-type">
+				<option value="book">Book</option>
+				<option value="movie">Movie</option>
+				<option value="TV-Show">TV Show</option>
+			</select>
+		</section>
+
 		<section class="book-search">
 			<h2>Book Search</h2>
 			<input type="text" id="search" placeholder="book title" />
-			<div>
+			<div class="year-filter">
 				<label for="start-year">Between</label>
 				<input type="text" id="start-year" placeholder="YYYY" />
 				<label for="end-year">and</label>
@@ -28,7 +43,7 @@
 			<h2>Movie Search</h2>
 			<label for="search">Search</label>
 			<input type="text" id="search" placeholder="movie title" />
-			<div>
+			<div class="year-filter">
 				<label for="start-year">Between</label>
 				<input type="text" id="start-year" placeholder="YYYY" />
 				<label for="end-year">and</label>
