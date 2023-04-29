@@ -1,20 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="search.js"></script>
+		<title>Document</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="search.js"></script>
-    <title>Document</title>
-</head>
-
-<body>
-
-    <label for="search">Search</label>
-    <input type="text" id="search">
-    <button id="searchButton">Test</button>
-
-</body>
-
+	<header>
+		<h1>Book and Movie Search</h1>
+	</header>
+	<body>
+		<section class="book-search">
+			<h2>Book Search</h2>
+			<input type="text" id="search" placeholder="book title" />
+			<div>
+				<label for="start-year">Between</label>
+				<input type="text" id="start-year" placeholder="YYYY" />
+				<label for="end-year">and</label>
+				<input type="text" id="end-year" placeholder="YYYY" />
+			</div>
+			<button id="searchButton">Test</button>
+		</section>
+		<section class="movie-search">
+			<h2>Movie Search</h2>
+			<label for="search">Search</label>
+			<input type="text" id="search" placeholder="movie title" />
+			<div>
+				<label for="start-year">Between</label>
+				<input type="text" id="start-year" placeholder="YYYY" />
+				<label for="end-year">and</label>
+				<input type="text" id="end-year" placeholder="YYYY" />
+			</div>
+			<button id="searchButton">Test</button>
+		</section>
+	</body>
+	<footer>
+		<h2>Some Stuff</h2>
+	</footer>
 </html>
