@@ -85,6 +85,11 @@ window.addEventListener('load', function () {
         position: absolute;
         `
     }
+    // Event listener for the filter type dropdown for after results are displayed.
+    this.document.getElementById('filter-results').onclick = function () {
+        const filterValue = document.getElementById('filter-results').value;
+        console.log(filterValue);
+    }
 
     // When Search Button is Clicked
     button.onclick = function () {
@@ -100,7 +105,7 @@ window.addEventListener('load', function () {
         if (document.getElementById('title').value != "") {
             console.log("Title: " + titleValue);
             // implement search type here
-            
+
         }
         if (document.getElementById('author').value != "") {
             console.log("Author: " + authorValue);
@@ -121,7 +126,6 @@ window.addEventListener('load', function () {
             // implement search type here
 
         }
-
 
 
 
@@ -162,8 +166,8 @@ window.addEventListener('load', function () {
 
                 book.appendChild(bookCover);
 
-
-                document.body.append(book);
+                // Changed the append statement to append books to a result container instead of the body. Will be able to sort and update the results using this approach.
+                document.getElementById('results-container').append(book);
                 bookCardMaker(book);
             })
             .catch(error => alert("Could not find a book with this name."));
