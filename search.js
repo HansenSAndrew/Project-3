@@ -88,13 +88,32 @@ window.addEventListener('load', function () {
 
     // When Search Button is Clicked
     button.onclick = function () {
+        // Collecting all potential search values from the search criteria.
+        const titleValue = document.getElementById('title').value;
+        const authorValue = document.getElementById('author').value;
+        const startDateValue = document.getElementById('start-year').value;
+        const endDateValue = document.getElementById('end-year').value;
 
-        // Gets search value from input field
-        const searchValue = document.getElementById('search').value;
-        console.log(searchValue);
+
+        // console logging all search values to make sure nothings weird. We should use these as starting points for what searches we want to do.
+        if (document.getElementById('title').value != "") {
+            console.log("Title: " + titleValue);
+        }
+        if (document.getElementById('author').value != "") {
+            console.log("Author: " + authorValue);
+        }
+        if (document.getElementById('start-year').value != "") {
+            console.log("Start Year: " + startDateValue);
+        }
+        if (document.getElementById('end-year').value != "" && document.getElementById('start-year').value != "" && document.getElementById('end-year').value > document.getElementById('start-year').value) {
+            console.log("End Year: " + endDateValue);
+        }
+
+
+
 
         // Splits String
-        const splitSearch = searchValue.split(" ");
+        const splitSearch = titleValue.split(" ");
         console.log(splitSearch);
 
         // Format Title for API Search
