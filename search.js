@@ -201,27 +201,30 @@ window.addEventListener('load', function () {
         bookPromise
             .then(res => { return res.json() })
             .then(data => {
-
-                console.log(data.docs[0]);
+                for (let i = 0; i < data.docs.length; i++) {
+                    console.log(data.docs[i]);
+                }
 
                 // Gets information about the books
-                bookTitle.innerText = data.docs[0].title;
-                bookAuthor.innerText = data.docs[0].author_name[0];
-                bookPublished.innerText = " (Published: " + data.docs[0].first_publish_year + ")";
+                for (let i = 0; i < data.docs.length; i++) {
+                    bookTitle.innerText = data.docs[i].title;
+                    bookAuthor.innerText = data.docs[i].author_name[i];
+                    bookPublished.innerText = " (Published: " + data.docs[i].first_publish_year + ")";
 
-                topField.appendChild(bookTitle);
-                textField.appendChild(bookAuthor);
-                topField.appendChild(bookPublished);
-
-
-                newImage.src = `https://covers.openlibrary.org/b/id/${data.docs[0].cover_i}-L.jpg`;
+                    topField.appendChild(bookTitle);
+                    textField.appendChild(bookAuthor);
+                    topField.appendChild(bookPublished);
 
 
-                book.appendChild(bookCover);
+                    newImage.src = `https://covers.openlibrary.org/b/id/${data.docs[i].cover_i}-L.jpg`;
 
-                // Changed the append statement to append books to a result container instead of the body. Will be able to sort and update the results using this approach.
-                document.getElementById('results-container').append(book);
-                bookCardMaker(book);
+
+                    book.appendChild(bookCover);
+
+                    // Changed the append statement to append books to a result container instead of the body. Will be able to sort and update the results using this approach.
+                    document.getElementById('results-container').append(book);
+                    bookCardMaker(book);
+                }
             })
             .catch(error => alert("Could not find a book with this name."));
     }
