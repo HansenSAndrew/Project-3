@@ -206,6 +206,20 @@ window.addEventListener('load', function () {
         `
     }
 
+    // helper method to extract title and year from an item.
+    function getTitleAndYear(item) {
+    let title, year;
+    if (item.hasOwnProperty("author_name")) { // book
+        title = item.title;
+        year = item.first_publish_year;
+    } else { // movie or show
+        title = item.Title;
+        year = item.Year;
+    }
+    return { title, year };
+}
+
+
     // Event listener for the filter type dropdown for after results are displayed.
     this.document.getElementById('filter-results').onclick = function () {
         const filterValue = document.getElementById('filter-results').value;
@@ -214,40 +228,47 @@ window.addEventListener('load', function () {
         console.log(everything);
         console.log(filterValue);
         if (filterValue == "alphabetical") {
-            // filter the books array by title, then send them through the card maker.
-            books.sort(function (a, b) {
-                if (a.title < b.title) { return -1; }
-                if (a.title > b.title) { return 1; }
-                return 0;
-            });
-        }
-        else if (filterValue == "oldest") {
-            // filter the results from the oldest to newest.
-            books.sort(function (a, b) {
-                if (a.first_publish_year < b.first_publish_year) { return -1; }
-                if (a.first_publish_year > b.first_publish_year) { return 1; }
-                return 0;
-            }
-            );
-        }
-        else if (filterValue == "newest") {
-            // filter the results from the newest to oldest.
-            books.sort(function (a, b) {
-                if (a.first_publish_year > b.first_publish_year) { return -1; }
-                if (a.first_publish_year < b.first_publish_year) { return 1; }
-                return 0;
-            }
-            );
-        }
-        else if (filterValue == "reverse-alphabetical") {
-            // filter the results from the newest to oldest.
-            books.sort(function (a, b) {
-                if (a.title > b.title) { return -1; }
-                if (a.title < b.title) { return 1; }
-                return 0;
-            }
-            );
-        }
+    // filter the results in alphabetical order.
+    everything.sort(function (a, b) {
+        const titleA = getTitleAndYear(a).title;
+        const titleB = getTitleAndYear(b).title;
+        if (titleA < titleB) { return -1; }
+        if (titleA > titleB) { return 1; }
+        return 0;
+    });
+}
+else if (filterValue == "oldest") {
+    // filter the results from the oldest to newest.
+    everything.sort(function (a, b) {
+        const yearA = getTitleAndYear(a).year;
+        const yearB = getTitleAndYear(b).year;
+        if (yearA < yearB) { return -1; }
+        if (yearA > yearB) { return 1; }
+        return 0;
+    });
+}
+else if (filterValue == "newest") {
+    // filter the results from the newest to oldest.
+    everything.sort(function (a, b) {
+        const yearA = getTitleAndYear(a).year;
+        const yearB = getTitleAndYear(b).year;
+        if (yearA > yearB) { return -1; }
+        if (yearA < yearB) { return 1; }
+        return 0;
+    });
+}
+else if (filterValue == "reverse-alphabetical") {
+    // filter the results in reverse alphabetical order.
+    everything.sort(function (a, b) {
+        const titleA = getTitleAndYear(a).title;
+        const titleB = getTitleAndYear(b).title;
+        if (titleA > titleB) { return -1; }
+        if (titleA < titleB) { return 1; }
+        return 0;
+    });
+}
+
+
         let book = false;
         document.getElementById("results-container").innerHTML = "";
         for (let i = 0; i < everything.length; i++) {
