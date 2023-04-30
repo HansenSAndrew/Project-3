@@ -13,6 +13,8 @@ window.addEventListener('load', function () {
     console.log(button);
 
 
+    // CARD MAKING FUNCTIONALITY STARTS HERE
+
     // movieCardMaker, needs to be implemented, only way I could think of to have the filter work correctly.
     const movieCardMaker = (mediaObj) => {
 
@@ -47,15 +49,6 @@ window.addEventListener('load', function () {
         const textField = document.createElement('div');
         textField.id = "textField";
         allText.appendChild(textField);
-
-
-        // There is no director field in this Movie API!
-
-        // Movie Director
-        // const director = document.createElement('span');
-        // director.id = "author";
-        // director.innerText = mediaObj.Director;
-        // textField.appendChild(director);
 
         // Movie Poster (cover)
         const cover = document.createElement('div');
@@ -206,6 +199,10 @@ window.addEventListener('load', function () {
         `
     }
 
+    // CARD MAKER FUNCTIONS END HERE
+
+    // SORTING AND FILTERING FUNCTIONALITY STARTS HERE
+
     // helper method to extract title and year from an item.
     function getTitleAndYear(item) {
     let title, year;
@@ -228,45 +225,49 @@ window.addEventListener('load', function () {
         console.log(everything);
         console.log(filterValue);
         if (filterValue == "alphabetical") {
-    // filter the results in alphabetical order.
-    everything.sort(function (a, b) {
-        const titleA = getTitleAndYear(a).title;
-        const titleB = getTitleAndYear(b).title;
-        if (titleA < titleB) { return -1; }
-        if (titleA > titleB) { return 1; }
-        return 0;
-    });
-}
-else if (filterValue == "oldest") {
-    // filter the results from the oldest to newest.
-    everything.sort(function (a, b) {
-        const yearA = getTitleAndYear(a).year;
-        const yearB = getTitleAndYear(b).year;
-        if (yearA < yearB) { return -1; }
-        if (yearA > yearB) { return 1; }
-        return 0;
-    });
-}
-else if (filterValue == "newest") {
-    // filter the results from the newest to oldest.
-    everything.sort(function (a, b) {
-        const yearA = getTitleAndYear(a).year;
-        const yearB = getTitleAndYear(b).year;
-        if (yearA > yearB) { return -1; }
-        if (yearA < yearB) { return 1; }
-        return 0;
-    });
-}
-else if (filterValue == "reverse-alphabetical") {
-    // filter the results in reverse alphabetical order.
-    everything.sort(function (a, b) {
-        const titleA = getTitleAndYear(a).title;
-        const titleB = getTitleAndYear(b).title;
-        if (titleA > titleB) { return -1; }
-        if (titleA < titleB) { return 1; }
-        return 0;
-    });
-}
+            // filter the results in alphabetical order.
+            everything.sort(function (a, b) {
+            const titleA = getTitleAndYear(a).title;
+            const titleB = getTitleAndYear(b).title;
+            if (titleA < titleB) {
+                return -1;
+            }
+            if (titleA > titleB) {
+                return 1;
+            }
+            return 0;
+            });
+        }
+        else if (filterValue == "oldest") {
+            // filter the results from the oldest to newest.
+            everything.sort(function (a, b) {
+                const yearA = getTitleAndYear(a).year;
+                const yearB = getTitleAndYear(b).year;
+                if (yearA < yearB) { return -1; }
+                if (yearA > yearB) { return 1; }
+                return 0;
+            });
+        }
+        else if (filterValue == "newest") {
+            // filter the results from the newest to oldest.
+            everything.sort(function (a, b) {
+                const yearA = getTitleAndYear(a).year;
+                const yearB = getTitleAndYear(b).year;
+                if (yearA > yearB) { return -1; }
+                if (yearA < yearB) { return 1; }
+                return 0;
+            });
+        }
+        else if (filterValue == "reverse-alphabetical") {
+            // filter the results in reverse alphabetical order.
+            everything.sort(function (a, b) {
+                const titleA = getTitleAndYear(a).title;
+                const titleB = getTitleAndYear(b).title;
+                if (titleA > titleB) { return -1; }
+                if (titleA < titleB) { return 1; }
+                return 0;
+            });
+        }
 
 
         let book = false;
@@ -282,7 +283,10 @@ else if (filterValue == "reverse-alphabetical") {
         }
     }
 
-
+// SORTING AND FILTERING FUNCTIONALITY ENDS HERE
+    
+    
+    // SEARCH HANDLING FUNCTIONALITY BEGINS HERE
 
     // When Search Button is Clicked
     button.onclick = function () {
@@ -423,7 +427,7 @@ else if (filterValue == "reverse-alphabetical") {
         }
     }
 
-
+// SEARCH HANDLING FUNCTIONALITY ENDS HERE
 
 
 
