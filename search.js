@@ -93,20 +93,33 @@ window.addEventListener('load', function () {
         const authorValue = document.getElementById('author').value;
         const startDateValue = document.getElementById('start-year').value;
         const endDateValue = document.getElementById('end-year').value;
+        const filterValue = document.getElementById('filter-type').value;
 
 
         // console logging all search values to make sure nothings weird. We should use these as starting points for what searches we want to do.
         if (document.getElementById('title').value != "") {
             console.log("Title: " + titleValue);
+            // implement search type here
+            
         }
         if (document.getElementById('author').value != "") {
             console.log("Author: " + authorValue);
+            // implement search type here
+
         }
         if (document.getElementById('start-year').value != "") {
             console.log("Start Year: " + startDateValue);
+            // implement search type here
+
         }
         if (document.getElementById('end-year').value != "" && document.getElementById('start-year').value != "" && document.getElementById('end-year').value > document.getElementById('start-year').value) {
             console.log("End Year: " + endDateValue);
+            // implement search type here
+        }
+        if (document.getElementById('filter-type').value != "") {
+            console.log("Filter Type: " + filterValue);
+            // implement search type here
+
         }
 
 
