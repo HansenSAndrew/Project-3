@@ -11,9 +11,10 @@ window.addEventListener('load', function () {
     // Search Button
     const button = document.getElementById('searchButton');
     console.log(button);
+
+
     // movieCardMaker, needs to be implemented, only way I could think of to have the filter work correctly.
-    const movieCardMaker = (mediaObj, isMovie) => {
-        console.log(mediaObj);
+    const movieCardMaker = (mediaObj) => {
 
         // Cover Information
         const mediaCover = document.createElement('div');
@@ -32,56 +33,43 @@ window.addEventListener('load', function () {
         // Movie Title
         const title = document.createElement('span');
         title.id = "title";
-        if (isMovie) {
-            title.innerText = mediaObj.Title;
-            topField.append(title);
-        }
-        else {
-            title.innerText = mediaObj.Title;
-            topField.append(title);
-        }
+        title.innerText = mediaObj.Title;
+        topField.append(title);
 
         // Year Published
         const published = document.createElement('span');
         published.id = "year";
-        if (isMovie) {
-            published.innerText = mediaObj.Year;
-            topField.append(published);
-        }
-        else {
-            published.innerText = mediaObj.Year;
-            topField.append(published);
-        }
+        published.innerText = mediaObj.Year;
+        topField.append(published);
+
 
         // Text field
         const textField = document.createElement('div');
         textField.id = "textField";
         allText.appendChild(textField);
 
-        // Movie Director
-        if (isMovie) {
-            const director = document.createElement('span');
-            director.id = "director";
-            director.innerText = mediaObj.Director;
-            textField.appendChild(director);
-        }
 
-        // cover
+        // There is no director field in this Movie API!
+
+        // Movie Director
+        // const director = document.createElement('span');
+        // director.id = "author";
+        // director.innerText = mediaObj.Director;
+        // textField.appendChild(director);
+
+        // Movie Poster (cover)
         const cover = document.createElement('div');
         cover.id = "cover";
         const newImage = document.createElement('img');
         newImage.id = "newImage";
         newImage.alt = "Selected Movie Cover"
-        if (isMovie) {
-            newImage.src = mediaObj.Poster;
-            cover.appendChild(newImage);
-            mediaCover.append(cover);
-        }
-        else {
-            newImage.src = mediaObj.Poster;
-            cover.appendChild(newImage);
-            mediaCover.append(cover);
-        }
+        newImage.src = mediaObj.Poster;
+        cover.appendChild(newImage);
+        mediaCover.append(cover);
+
+        // Stylizes Card
+        stylize(mediaCover);
+
         let container = document.getElementById('results-container');
         container.appendChild(mediaCover);
         // if the movies array doesnt have the mediaObj, push it to the array.
@@ -93,9 +81,7 @@ window.addEventListener('load', function () {
     }
 
     // renamed this to bookCardMaker for functionality.
-    const bookCardMaker = (mediaObj, isBook) => {
-
-        console.log(mediaObj);
+    const bookCardMaker = (mediaObj) => {
 
         // Cover Information
         const mediaCover = document.createElement('div');
@@ -114,26 +100,14 @@ window.addEventListener('load', function () {
         // Book Title
         const title = document.createElement('span');
         title.id = "title";
-        if (isBook) {
-            title.innerText = mediaObj.title;
-            topField.append(title);
-        }
-        else {
-            title.innerText = mediaObj.Title;
-            topField.append(title);
-        }
+        title.innerText = mediaObj.title;
+        topField.append(title);
 
         // Year Published
         const published = document.createElement('span');
         published.id = "year";
-        if (isBook) {
-            published.innerText = mediaObj.first_publish_year;
-            topField.append(published);
-        }
-        else {
-            published.innerText = mediaObj.Year;
-            topField.append(published);
-        }
+        published.innerText = mediaObj.first_publish_year;
+        topField.append(published);
 
         // Text field
         const textField = document.createElement('div');
@@ -141,12 +115,10 @@ window.addEventListener('load', function () {
         allText.appendChild(textField);
 
         // Book Author
-        if (isBook) {
-            const author = document.createElement('span');
-            author.id = "author";
-            author.innerText = mediaObj.author_name[0];
-            textField.appendChild(author);
-        }
+        const author = document.createElement('span');
+        author.id = "author";
+        author.innerText = mediaObj.author_name[0];
+        textField.appendChild(author);
 
         // cover
         const cover = document.createElement('div');
@@ -154,17 +126,43 @@ window.addEventListener('load', function () {
         const newImage = document.createElement('img');
         newImage.id = "newImage";
         newImage.alt = "Selected Book Cover"
-        if (isBook) {
-            newImage.src = `https://covers.openlibrary.org/b/id/${mediaObj.cover_i}-L.jpg`;
-            cover.appendChild(newImage);
-            mediaCover.append(cover);
-        }
-        else {
-            newImage.src = mediaObj.Poster;
-            cover.appendChild(newImage);
-            mediaCover.append(cover);
-        }
+        newImage.src = `https://covers.openlibrary.org/b/id/${mediaObj.cover_i}-L.jpg`;
+        cover.appendChild(newImage);
+        mediaCover.append(cover);
 
+        // Stylizes card
+        stylize(mediaCover);
+
+        // Seperate style for just books
+        author.style = `
+        font-size: 20px;
+        `
+
+        let container = document.getElementById('results-container');
+        container.appendChild(mediaCover);
+        // if the books array doesnt have the mediaObj, push it to the array.
+        if (!books.includes(mediaObj)) {
+            books.push(mediaObj);
+            console.log("books:");
+            console.log(books);
+        }
+    }
+
+    // This function is used to stylize cards (results)
+    function stylize(mediaCover) {
+
+        const allText = mediaCover.childNodes[0];
+        const cover = mediaCover.childNodes[1];
+
+        const topField = allText.childNodes[0];
+        const textField = allText.childNodes[1];
+
+        const title = topField.childNodes[0];
+        const year = topField.childNodes[1];
+
+        const author = textField.childNodes[0];
+
+        const newImage = cover.childNodes[0];
 
         mediaCover.style = `
         position: static;
@@ -196,10 +194,6 @@ window.addEventListener('load', function () {
         font-size : 30px;
         `
 
-        author.style = `
-        font-size: 20px;
-        `
-
         cover.style = `
         float : left;
         height: 240px;
@@ -210,16 +204,6 @@ window.addEventListener('load', function () {
         width : 160px;
         position: absolute;
         `
-
-
-        let container = document.getElementById('results-container');
-        container.appendChild(mediaCover);
-        // if the books array doesnt have the mediaObj, push it to the array.
-        if (!books.includes(mediaObj)) {
-            books.push(mediaObj);
-            console.log("books:");
-            console.log(books);
-        }
     }
 
     // Event listener for the filter type dropdown for after results are displayed.
@@ -395,7 +379,7 @@ window.addEventListener('load', function () {
             const bookPromise = fetch(`${link}${title}`);
             bookPromise
                 .then(res => { return res.json() })
-                .then(data => { bookCardMaker(data.docs[i], true) });
+                .then(data => { bookCardMaker(data.docs[i]) });
 
         }
     }
@@ -405,18 +389,16 @@ window.addEventListener('load', function () {
             const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&apikey=6a9680f`);
             moviePromise
                 .then(res => { return res.json() })
-                .then(data => { movieCardMaker(data.Search[i], true) });
+                .then(data => { movieCardMaker(data.Search[i]) });
         }
     }
 
-
-    // Broken function... API doesn't want to work with this.
     const movieYearSearch = (year) => {
         for (let i = 0; i < 3; i++) {
-            const moviePromise = fetch(`http://www.omdbapi.com/?y=${year}&apikey=6a9680f`);
+            const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&y=${year}&apikey=6a9680f`);
             moviePromise
                 .then(res => { return res.json() })
-                .then(data => { movieCardMaker(data.Search, true) });
+                .then(data => { movieCardMaker(data.Search[i]) });
         }
     }
 
