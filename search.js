@@ -2,6 +2,12 @@
 // Waits for HTML to load
 window.addEventListener('load', function () {
 
+    // Declaring arrays to hold all the information from each search locally, to do sorting and filtering on.
+    const books = [];
+    const movies = [];
+    const shows = [];
+    const everything = [];
+
     // Search Button
     const button = document.getElementById('searchButton');
     console.log(button);
@@ -139,6 +145,14 @@ window.addEventListener('load', function () {
 
     // When Search Button is Clicked
     button.onclick = function () {
+        // flags for the search:
+
+        let titleFlag = false;
+        let authorFlag = false;
+        let startDateFlag = false;
+        let endDateFlag = false;
+
+
         // Collecting all potential search values from the search criteria.
         const titleValue = document.getElementById('title').value;
         const authorValue = document.getElementById('author').value;
@@ -149,21 +163,26 @@ window.addEventListener('load', function () {
 
         // console logging all search values to make sure nothings weird. We should use these as starting points for what searches we want to do.
         if (document.getElementById('title').value != "") {
+            titleFlag = true;
             console.log("Title: " + titleValue);
             // implement search type here
 
         }
         if (document.getElementById('author').value != "") {
+            authorFlag = true;
             console.log("Author: " + authorValue);
             // implement search type here
 
         }
         if (document.getElementById('start-year').value != "") {
+            startDateFlag = true;
             console.log("Start Year: " + startDateValue);
             // implement search type here
 
         }
-        if (document.getElementById('end-year').value != "" && document.getElementById('start-year').value != "" && document.getElementById('end-year').value > document.getElementById('start-year').value) {
+        if (document.getElementById('end-year').value != "" && document.getElementById('start-year').value != "" &&
+            document.getElementById('end-year').value > document.getElementById('start-year').value) {
+            endDateFlag = true;
             console.log("End Year: " + endDateValue);
             // implement search type here
         }
@@ -173,9 +192,10 @@ window.addEventListener('load', function () {
 
         }
 
+        // handling the search based on the flags.
 
-
-        // Splits String
+        if (titleFlag == true) {
+        // Searching book titles
         const splitSearch = titleValue.split(" ");
         console.log(splitSearch);
 
@@ -186,9 +206,43 @@ window.addEventListener('load', function () {
             if (i < splitSearch.length - 1)
                 title += "+"
         }
-
         title = title.toLowerCase();
-        console.log(title);
+            console.log(title);
+            let link = 'https://openlibrary.org/search.json?q=';
+            bookSearch(title, link);
+
+        }
+        if (authorFlag == true) {
+            // searching for book authors
+            const splitSearch = authorValue.split(" ");
+        console.log(splitSearch);
+
+        // Format Title for API Search
+        let author = "";
+        for (let i = 0; i < splitSearch.length; i++) {
+            author += splitSearch[i];
+            if (i < splitSearch.length - 1)
+                author += "+"
+        }
+        author = author.toLowerCase();
+            console.log(author);
+            let link = 'https://openlibrary.org/search.json?author=';
+            bookSearch(author, link);
+
+        }
+        if (startDateFlag == true && endDateFlag == true) {
+        // Format Title for API Search
+        let dates = `[${startDateValue}+TO+${endDateValue}]`;
+            console.log("Dates in the search: " + dates);
+            let link = 'https://openlibrary.org/search.json?q=first_publish_year%3A';
+            bookSearch(dates, link);
+        }
+    }
+
+
+
+    // Function to search for books, takes in the link and the data to search for.
+    const bookSearch = (data, link) => {
 
         for (let i = 0; i < 3; i++) {
             const bookPromise = fetch(`https://openlibrary.org/search.json?q=${title}`);
