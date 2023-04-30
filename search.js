@@ -2,6 +2,12 @@
 // Waits for HTML to load
 window.addEventListener('load', function () {
 
+    // Declaring arrays to hold all the information from each search locally, to do sorting and filtering on.
+    const books = [];
+    const movies = [];
+    const shows = [];
+    const everything = [];
+
     // Search Button
     const button = document.getElementById('searchButton');
     console.log(button);
@@ -179,20 +185,15 @@ window.addEventListener('load', function () {
 
         }
         if (startDateFlag == true && endDateFlag == true) {
-            const splitSearch = authorValue.split(" ");
-        console.log(splitSearch);
-
         // Format Title for API Search
-        let dates = `[${startDateValue}TO${endDateValue}]`;
-            console.log(dates);
-            let link = 'https://openlibrary.org/search.json?q=first_publish_year';
+        let dates = `[${startDateValue}+TO+${endDateValue}]`;
+            console.log("Dates in the search: " + dates);
+            let link = 'https://openlibrary.org/search.json?q=first_publish_year%3A';
             bookSearch(dates, link);
         }
-        // const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&apikey=6a9680f`);
-        // moviePromise
-        // .then(res => {return res.json()})
-        // .then(data => console.log(data.Search));
     }
+
+
 
     // Function to search for books, takes in the link and the data to search for.
     const bookSearch = (data, link) => {
@@ -228,6 +229,11 @@ window.addEventListener('load', function () {
             })
             .catch(error => alert("Could not find a book with this name."));
     }
+
+    // const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&apikey=6a9680f`);
+        // moviePromise
+        // .then(res => {return res.json()})
+        // .then(data => console.log(data.Search));
 
 
 });
