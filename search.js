@@ -398,19 +398,29 @@ window.addEventListener('load', function () {
     }
 
     // Function to search for books, takes in the link and the data to search for.
-    const bookSearch = (title, link) => {
+    const bookSearch = (data, link) => {
+    const fetchPromises = [];
 
-        for (let i = 0; i < 3; i++) {
-            const bookPromise = fetch(`${link}${title}`);
-            bookPromise
-                .then(res => { return res.json() })
-                .then(data => { bookCardMaker(data.docs[i]) });
-
-        }
+    for (let i = 0; i < 30; i++) {
+        fetchPromises.push(
+            fetch(`${link}${data}&limit=30&fields=title,type,author_name,first_publish_year,cover_i`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.docs[i]) {
+                        bookCardMaker(data.docs[i]);
+                    }
+                })
+        );
     }
 
+    Promise.all(fetchPromises).then(() => {
+        console.log('All book fetch requests completed');
+    });
+};
+
+
     const movieSearch = title => {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 30; i++) {
             const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&apikey=6a9680f`);
             moviePromise
                 .then(res => { return res.json() })
@@ -419,7 +429,7 @@ window.addEventListener('load', function () {
     }
 
     const movieYearSearch = (year) => {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 30; i++) {
             const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&y=${year}&apikey=6a9680f`);
             moviePromise
                 .then(res => { return res.json() })
