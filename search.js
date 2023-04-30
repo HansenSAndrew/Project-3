@@ -157,7 +157,7 @@ window.addEventListener('load', function () {
         title = title.toLowerCase();
             console.log(title);
             let link = 'https://openlibrary.org/search.json?q=';
-            bookSearch(link, title);
+            bookSearch(title, link);
 
         }
         if (authorFlag == true) {
@@ -175,7 +175,7 @@ window.addEventListener('load', function () {
         author = author.toLowerCase();
             console.log(author);
             let link = 'https://openlibrary.org/search.json?author=';
-            bookSearch(link, author);
+            bookSearch(author, link);
 
         }
         if (startDateFlag == true && endDateFlag == true) {
@@ -186,7 +186,7 @@ window.addEventListener('load', function () {
         let dates = `[${startDateValue}TO${endDateValue}]`;
             console.log(dates);
             let link = 'https://openlibrary.org/search.json?q=first_publish_year';
-            bookSearch(link, dates);
+            bookSearch(dates, link);
         }
         // const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&apikey=6a9680f`);
         // moviePromise
