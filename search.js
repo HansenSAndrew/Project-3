@@ -135,7 +135,7 @@ window.addEventListener('load', function () {
 
 
         let container = document.getElementById('results-container');
-        this.document.body.append(mediaCover);
+        container.appendChild(mediaCover);
     }
     // Event listener for the filter type dropdown for after results are displayed.
     this.document.getElementById('filter-results').onclick = function () {
@@ -145,6 +145,9 @@ window.addEventListener('load', function () {
 
     // When Search Button is Clicked
     button.onclick = function () {
+        document.getElementById("results-container").innerHTML = "";
+
+
         // flags for the search:
 
         let titleFlag = false;
@@ -195,54 +198,54 @@ window.addEventListener('load', function () {
         // handling the search based on the flags.
 
         if (titleFlag == true) {
-        // Searching book titles
-        const splitSearch = titleValue.split(" ");
-        console.log(splitSearch);
+            // Searching book titles
+            const splitSearch = titleValue.split(" ");
+            console.log(splitSearch);
 
-        // Format Title for API Search
-        let title = "";
-        for (let i = 0; i < splitSearch.length; i++) {
-            title += splitSearch[i];
-            if (i < splitSearch.length - 1)
-                title += "+"
-        }
-        title = title.toLowerCase();
+            // Format Title for API Search
+            let title = "";
+            for (let i = 0; i < splitSearch.length; i++) {
+                title += splitSearch[i];
+                if (i < splitSearch.length - 1)
+                    title += "+"
+            }
+            title = title.toLowerCase();
             console.log(title);
             let link = 'https://openlibrary.org/search.json?q=';
-            bookSearch(title, link);
+            bookSearch(title);
 
         }
-        if (authorFlag == true) {
-            // searching for book authors
-            const splitSearch = authorValue.split(" ");
-        console.log(splitSearch);
+        // if (authorFlag == true) {
+        //     // searching for book authors
+        //     const splitSearch = authorValue.split(" ");
+        //     console.log(splitSearch);
 
-        // Format Title for API Search
-        let author = "";
-        for (let i = 0; i < splitSearch.length; i++) {
-            author += splitSearch[i];
-            if (i < splitSearch.length - 1)
-                author += "+"
-        }
-        author = author.toLowerCase();
-            console.log(author);
-            let link = 'https://openlibrary.org/search.json?author=';
-            bookSearch(author, link);
+        //     // Format Title for API Search
+        //     let author = "";
+        //     for (let i = 0; i < splitSearch.length; i++) {
+        //         author += splitSearch[i];
+        //         if (i < splitSearch.length - 1)
+        //             author += "+"
+        //     }
+        //     author = author.toLowerCase();
+        //     console.log(author);
+        //     let link = 'https://openlibrary.org/search.json?author=';
+        //     bookSearch(author, link);
 
-        }
-        if (startDateFlag == true && endDateFlag == true) {
-        // Format Title for API Search
-        let dates = `[${startDateValue}+TO+${endDateValue}]`;
-            console.log("Dates in the search: " + dates);
-            let link = 'https://openlibrary.org/search.json?q=first_publish_year%3A';
-            bookSearch(dates, link);
-        }
+        // }
+        // if (startDateFlag == true && endDateFlag == true) {
+        //     // Format Title for API Search
+        //     let dates = `[${startDateValue}+TO+${endDateValue}]`;
+        //     console.log("Dates in the search: " + dates);
+        //     let link = 'https://openlibrary.org/search.json?q=first_publish_year%3A';
+        //     bookSearch(dates, link);
+        // }
+
+
     }
 
-
-
     // Function to search for books, takes in the link and the data to search for.
-    const bookSearch = (data, link) => {
+    const bookSearch = (title) => {
 
         for (let i = 0; i < 3; i++) {
             const bookPromise = fetch(`https://openlibrary.org/search.json?q=${title}`);
@@ -258,6 +261,10 @@ window.addEventListener('load', function () {
 
         }
     }
+
+
+
+
 
 
 });
