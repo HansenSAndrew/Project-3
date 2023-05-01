@@ -307,7 +307,6 @@ window.addEventListener('load', function () {
         const authorValue = document.getElementById('author').value;
         const startDateValue = document.getElementById('start-year').value;
         const endDateValue = document.getElementById('end-year').value;
-        const filterValue = document.getElementById('filter-type').value;
 
 
         // console logging all search values to make sure nothings weird. We should use these as starting points for what searches we want to do.
@@ -337,11 +336,6 @@ window.addEventListener('load', function () {
             endDateFlag = true;
             console.log("End Year: " + endDateValue);
             // implement search type here
-        }
-        if (document.getElementById('filter-type').value != "") {
-            console.log("Filter Type: " + filterValue);
-            // implement search type here
-
         }
 
         // handling the search based on the flags.
