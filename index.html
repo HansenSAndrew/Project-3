@@ -14,8 +14,16 @@
 			<section class="search">
 				<div class="search-inputs">
 					<div class="long-inputs">
-						<input type="text" id="title" placeholder="book title" />
-						<input type="text" id="author" placeholder="author" />
+						<input
+							type="text"
+							id="title-input"
+							placeholder="book title or movie title"
+						/>
+						<input
+							type="text"
+							id="author-input"
+							placeholder="author or producer"
+						/>
 					</div>
 					<div class="short-inputs">
 						<label class="year-text" for="start-year">Between</label>
@@ -28,22 +36,26 @@
 					</div>
 				</div>
 			</section>
-		</div>
 
-		<section class="results" id="results">
-			<div class="filter-results">
-				<options>
-					<select id="filter-results">
-						<option value="alphabetical">A-Z</option>
-						<option value="oldest">Old -> New</option>
-						<option value="newest">New -> Old</option>
-						<option value="reverse-alphabetical">Z-A</option>
-					</select>
-				</options>
-			</div>
-			<div class="results-container" id="results-container">
-				<!--THIS IS WHERE THE RESULTS GO-->
-			</div>
-		</section>
+			<section class="results" id="results">
+				<div class="filter-results">
+					<h2>Results</h2>
+					<div class="options">
+						<label for="filter-results">Sort by: </label>
+						<options>
+							<select id="filter-results">
+								<option value="alphabetical">A-Z</option>
+								<option value="oldest">Old -> New</option>
+								<option value="newest">New -> Old</option>
+								<option value="reverse-alphabetical">Z-A</option>
+							</select>
+						</options>
+					</div>
+				</div>
+				<div class="results-container" id="results-container">
+					<!--THIS IS WHERE THE RESULTS GO-->
+				</div>
+			</section>
+		</div>
 	</body>
 </html>
