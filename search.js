@@ -236,73 +236,6 @@ const bookCardMaker = (mediaObj) => {
         return { title, year };
     }
 
-
-    // Event listener for the filter type dropdown for after results are displayed.
-    this.document.getElementById('filter-results').onclick = function () {
-        const filterValue = document.getElementById('filter-results').value;
-        everything = [...books, ...movies, ...shows];
-        console.log("Everything");
-        console.log(everything);
-        console.log(filterValue);
-        if (filterValue == "alphabetical") {
-            // filter the results in alphabetical order.
-            everything.sort(function (a, b) {
-            const titleA = getTitleAndYear(a).title;
-            const titleB = getTitleAndYear(b).title;
-            if (titleA < titleB) {
-                return -1;
-            }
-            if (titleA > titleB) {
-                return 1;
-            }
-            return 0;
-            });
-        }
-        else if (filterValue == "oldest") {
-            // filter the results from the oldest to newest.
-            everything.sort(function (a, b) {
-                const yearA = getTitleAndYear(a).year;
-                const yearB = getTitleAndYear(b).year;
-                if (yearA < yearB) { return -1; }
-                if (yearA > yearB) { return 1; }
-                return 0;
-            });
-        }
-        else if (filterValue == "newest") {
-            // filter the results from the newest to oldest.
-            everything.sort(function (a, b) {
-                const yearA = getTitleAndYear(a).year;
-                const yearB = getTitleAndYear(b).year;
-                if (yearA > yearB) { return -1; }
-                if (yearA < yearB) { return 1; }
-                return 0;
-            });
-        }
-        else if (filterValue == "reverse-alphabetical") {
-            // filter the results in reverse alphabetical order.
-            everything.sort(function (a, b) {
-                const titleA = getTitleAndYear(a).title;
-                const titleB = getTitleAndYear(b).title;
-                if (titleA > titleB) { return -1; }
-                if (titleA < titleB) { return 1; }
-                return 0;
-            });
-        }
-
-
-        let book = false;
-        document.getElementById("results-container").innerHTML = "";
-        for (let i = 0; i < everything.length; i++) {
-            // check if everything[i] contains an author field.
-            if (everything[i].hasOwnProperty("author_name")) {
-                book = true;
-                bookCardMaker(everything[i], true);
-            } else {
-                movieCardMaker(everything[i], true);
-            }
-        }
-    }
-
 // SORTING AND FILTERING FUNCTIONALITY ENDS HERE
     
     
@@ -310,7 +243,18 @@ const bookCardMaker = (mediaObj) => {
 
     // When Search Button is Clicked
     button.onclick = function () {
-        document.getElementById("results-container").innerHTML = "";
+        const filterResultsDiv = createFilterResultsDiv();
+        const resultsContainer = document.getElementById("results-container");
+        const resultsSection = document.getElementById("results");
+        resultsContainer.innerHTML = "";
+
+        // Remove existing filter-results div if present
+        const existingFilterResultsDiv = document.querySelector(".filter-results");
+        if (existingFilterResultsDiv) {
+            resultsSection.removeChild(existingFilterResultsDiv);
+        }
+
+    resultsSection.insertBefore(filterResultsDiv, resultsContainer);
         
 
 
@@ -453,6 +397,114 @@ const bookCardMaker = (mediaObj) => {
     }
 
 // SEARCH HANDLING FUNCTIONALITY ENDS HERE
+    
+    // Function to create filter-results div
+function createFilterResultsDiv() {
+    const filterResultsDiv = document.createElement('div');
+    filterResultsDiv.className = 'filter-results';
+
+    const h2 = document.createElement('h2');
+    h2.textContent = 'Results';
+    filterResultsDiv.appendChild(h2);
+
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'options';
+    filterResultsDiv.appendChild(optionsDiv);
+
+    const label = document.createElement('label');
+    label.setAttribute('for', 'filter-results');
+    label.textContent = 'Sort by: ';
+    optionsDiv.appendChild(label);
+
+    const options = document.createElement('options');
+    optionsDiv.appendChild(options);
+
+    const select = document.createElement('select');
+    select.id = 'filter-results';
+    options.appendChild(select);
+
+    const optionValues = ['alphabetical', 'oldest', 'newest', 'reverse-alphabetical'];
+    const optionTexts = ['A-Z', 'Old -> New', 'New -> Old', 'Z-A'];
+
+    for (let i = 0; i < optionValues.length; i++) {
+        const option = document.createElement('option');
+        option.value = optionValues[i];
+        option.textContent = optionTexts[i];
+        select.appendChild(option);
+    }
+
+    // Add the event listener for the filter type dropdown
+    select.addEventListener('change', handleFilterChange);
+
+    return filterResultsDiv;
+}
+
+// Function to handle filter change
+function handleFilterChange() {
+    const filterValue = document.getElementById('filter-results').value;
+        everything = [...books, ...movies, ...shows];
+        console.log("Everything");
+        console.log(everything);
+        console.log(filterValue);
+        if (filterValue == "alphabetical") {
+            // filter the results in alphabetical order.
+            everything.sort(function (a, b) {
+            const titleA = getTitleAndYear(a).title;
+            const titleB = getTitleAndYear(b).title;
+            if (titleA < titleB) {
+                return -1;
+            }
+            if (titleA > titleB) {
+                return 1;
+            }
+            return 0;
+            });
+        }
+        else if (filterValue == "oldest") {
+            // filter the results from the oldest to newest.
+            everything.sort(function (a, b) {
+                const yearA = getTitleAndYear(a).year;
+                const yearB = getTitleAndYear(b).year;
+                if (yearA < yearB) { return -1; }
+                if (yearA > yearB) { return 1; }
+                return 0;
+            });
+        }
+        else if (filterValue == "newest") {
+            // filter the results from the newest to oldest.
+            everything.sort(function (a, b) {
+                const yearA = getTitleAndYear(a).year;
+                const yearB = getTitleAndYear(b).year;
+                if (yearA > yearB) { return -1; }
+                if (yearA < yearB) { return 1; }
+                return 0;
+            });
+        }
+        else if (filterValue == "reverse-alphabetical") {
+            // filter the results in reverse alphabetical order.
+            everything.sort(function (a, b) {
+                const titleA = getTitleAndYear(a).title;
+                const titleB = getTitleAndYear(b).title;
+                if (titleA > titleB) { return -1; }
+                if (titleA < titleB) { return 1; }
+                return 0;
+            });
+        }
+
+
+        let book = false;
+        document.getElementById("results-container").innerHTML = "";
+        for (let i = 0; i < everything.length; i++) {
+            // check if everything[i] contains an author field.
+            if (everything[i].hasOwnProperty("author_name")) {
+                book = true;
+                bookCardMaker(everything[i], true);
+            } else {
+                movieCardMaker(everything[i], true);
+            }
+        }
+}
+
 
 
 
