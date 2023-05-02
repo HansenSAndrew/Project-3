@@ -174,7 +174,7 @@ const bookCardMaker = (mediaObj) => {
         border-right: transparent;
         border-left: transparent;
         border-top: transparent;
-        border-color: #ffffff;
+        border-color: rgba(255,144,168,1);
         height: 230px;
         width: 700px;
         margin-top: 50px;
@@ -237,8 +237,6 @@ const bookCardMaker = (mediaObj) => {
     }
 
 // SORTING AND FILTERING FUNCTIONALITY ENDS HERE
-    
-    
     // SEARCH HANDLING FUNCTIONALITY BEGINS HERE
 
     // When Search Button is Clicked
@@ -255,7 +253,6 @@ const bookCardMaker = (mediaObj) => {
         }
 
     resultsSection.insertBefore(filterResultsDiv, resultsContainer);
-        
 
 
         // flags for the search:
