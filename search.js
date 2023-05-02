@@ -28,7 +28,7 @@ window.addEventListener('load', function () {
     const newImage = document.createElement('img');
     newImage.id = "newImage";
     newImage.alt = "Selected Movie Cover";
-    newImage.src = mediaObj.Poster !== "N/A" ? mediaObj.Poster : "/project-3/images/placeholder.png";
+    newImage.src = mediaObj.Poster !== "N/A" ? mediaObj.Poster : "images/placeholder.png";
     cover.appendChild(newImage);
     mediaCover.append(cover);
 
@@ -84,7 +84,7 @@ const bookCardMaker = (mediaObj) => {
     const newImage = document.createElement('img');
     newImage.id = "newImage";
     newImage.alt = "Selected Book Cover";
-    newImage.src = mediaObj.cover_i ? `https://covers.openlibrary.org/b/id/${mediaObj.cover_i}-L.jpg` : "/project-3/images/placeholder.png";
+    newImage.src = mediaObj.cover_i ? `https://covers.openlibrary.org/b/id/${mediaObj.cover_i}-L.jpg` : "images/placeholder.png";
     cover.appendChild(newImage);
     mediaCover.append(cover);
 
