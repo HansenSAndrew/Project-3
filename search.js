@@ -120,12 +120,6 @@ const bookCardMaker = (mediaObj) => {
     author.id = "author";
     author.innerText = mediaObj.author_name[0];
     textField.appendChild(author);
-    author.style = `
-        font-size: 16px;
-        color: #ffffff;
-        height: 20px;
-        text-shadow: 0px 2px 5px #00000085;
-        `
 
     // Stylizes card
     stylize(mediaCover);
@@ -145,79 +139,29 @@ const bookCardMaker = (mediaObj) => {
 
     // This function is used to stylize cards (results)
     function stylize(mediaCover) {
+    const cover = mediaCover.childNodes[0];
+    const allText = mediaCover.childNodes[1];
 
-        const cover = mediaCover.childNodes[0];
-        const allText = mediaCover.childNodes[1];
-;
+    const topField = allText.childNodes[0];
+    const textField = allText.childNodes[1];
 
-        const topField = allText.childNodes[0];
-        const textField = allText.childNodes[1];
+    const title = topField.childNodes[0];
+    const year = topField.childNodes[1];
 
-        const title = topField.childNodes[0];
-        const year = topField.childNodes[1];
+    const author = textField.childNodes[0];
 
-        const author = textField.childNodes[0];
+    const newImage = cover.childNodes[0];
 
-        const newImage = cover.childNodes[0];
+    topField.classList.add('top-field');
+    mediaCover.classList.add('media-cover');
+    cover.classList.add('cover');
+    newImage.classList.add('new-image');
+    allText.classList.add('all-text');
+    year.classList.add('year');
+    title.classList.add('title');
+    author.classList.add('author');
+}
 
-        topField.style = `
-        width: 500px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        `
-
-        mediaCover.style = `
-        display: flex;
-        flex-direction: row;
-        border-style: solid;
-        border-right: transparent;
-        border-left: transparent;
-        border-top: transparent;
-        border-color: rgba(255,144,168,1);
-        height: 230px;
-        width: 700px;
-        margin-top: 50px;
-        `
-        cover.style = `
-        height: 200px;
-        `
-
-        newImage.style = `
-        height: 200px;
-        width : 133px;
-        object-fit: cover;
-        padding-right: 70px;
-        `
-        cover.style = `
-        height: 200px
-        `
-        allText.style = `
-        margin-right: 100px;
-        font-family: 'Roboto', sans-serif;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        `
-        year.style = `
-        font-size: 20px;
-        color: #ffffff;
-        margin-left: 10px;
-        border-left: solid;
-        border-color: #ffffff;
-        border-width: 1px;
-        padding-left: 10px;
-        height: 20px;
-        text-shadow: 0px 2px 5px #00000085;
-        `
-
-        title.style = `
-        font-weight: bold;
-        color: #ffffff;
-        font-size : 20px;
-        text-shadow: 0px 2px 5px #00000085;
-        `
-    }
 
     // CARD MAKER FUNCTIONS END HERE
 
