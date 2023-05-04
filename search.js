@@ -13,154 +13,136 @@ window.addEventListener('load', function () {
     console.log(button);
 
 
-    // CARD MAKING FUNCTIONALITY STARTS HERE
+    // Card Maker
 
-    // movieCardMaker, needs to be implemented, only way I could think of to have the filter work correctly.
-    const movieCardMaker = (mediaObj) => {
+    const bookCardMaker = (mediaObj) => {
 
-    // Cover Information
-    const mediaCover = document.createElement('div');
-    mediaCover.id = "info";
+        // Cover Information
+        const mediaCover = document.createElement('div');
+        mediaCover.id = "info";
 
-    // Movie Poster (cover)
-    const cover = document.createElement('div');
-    cover.id = "cover";
-    const newImage = document.createElement('img');
-    newImage.id = "newImage";
-    newImage.alt = "Selected Movie Cover";
-    newImage.src = mediaObj.Poster !== "N/A" ? mediaObj.Poster : "images/placeholder.png";
-    cover.appendChild(newImage);
-    mediaCover.append(cover);
+        // cover
+        const cover = document.createElement('div');
+        cover.id = "cover";
+        const newImage = document.createElement('img');
+        newImage.id = "newImage";
+        newImage.alt = "Selected Book Cover";
+        newImage.src = mediaObj.cover_i ? `https://covers.openlibrary.org/b/id/${mediaObj.cover_i}-L.jpg` : "images/placeholder.png";
+        cover.appendChild(newImage);
+        mediaCover.append(cover);
 
-    // All Text
-    const allText = document.createElement('div');
-    allText.id = "allText";
-    mediaCover.append(allText);
-        // djfdijnds
-    // Top Field
-    const topField = document.createElement('div');
-    topField.id = "topField";
-    allText.append(topField);
+        // All Text
+        const allText = document.createElement('div');
+        allText.id = "allText";
+        mediaCover.append(allText);
 
-    // Movie Title
-    const title = document.createElement('span');
-    title.id = "title";
-    title.innerText = mediaObj.Title;
-    topField.append(title);
+        // Top Field
+        const topField = document.createElement('div');
+        topField.id = "topField";
+        allText.append(topField);
 
-    // Year Published
-    const published = document.createElement('span');
-    published.id = "year";
-    published.innerText = mediaObj.Year;
-    topField.append(published);
+        // Book Title
+        const title = document.createElement('span');
+        title.id = "title";
+        title.innerText = mediaObj.title;
+        topField.append(title);
 
-    // Text field
-    const textField = document.createElement('div');
-    textField.id = "textField";
-    allText.appendChild(textField);
+        // Year Published
+        const published = document.createElement('span');
+        published.id = "year";
+        published.innerText = mediaObj.first_publish_year;
+        topField.append(published);
 
-    // Stylizes Card
-    stylize(mediaCover);
+        // Text field
+        const textField = document.createElement('div');
+        textField.id = "textField";
+        allText.appendChild(textField);
 
-    let container = document.getElementById('results-container');
-    container.appendChild(mediaCover);
-    // if the movies array doesnt have the mediaObj, push it to the array.
-    if (!movies.includes(mediaObj)) {
-        movies.push(mediaObj);
-        console.log("movies:");
-        console.log(movies);
+        // Book Author
+        const author = document.createElement('span');
+        author.id = "author";
+        author.innerText = mediaObj.author_name[0];
+        textField.appendChild(author);
+
+        // Stylizes card
+        stylize(mediaCover);
+
+
+        let container = document.getElementById('results-container');
+        container.appendChild(mediaCover);
+        // if the books array doesnt have the mediaObj, push it to the array.
+        if (!books.includes(mediaObj)) {
+            books.push(mediaObj);
+            console.log("books:");
+            console.log(books);
+        }
+
+
+        movieSearch(mediaObj.title, allText);
+
     }
-}
 
-const bookCardMaker = (mediaObj) => {
-
-    // Cover Information
-    const mediaCover = document.createElement('div');
-    mediaCover.id = "info";
-
-    // cover
-    const cover = document.createElement('div');
-    cover.id = "cover";
-    const newImage = document.createElement('img');
-    newImage.id = "newImage";
-    newImage.alt = "Selected Book Cover";
-    newImage.src = mediaObj.cover_i ? `https://covers.openlibrary.org/b/id/${mediaObj.cover_i}-L.jpg` : "images/placeholder.png";
-    cover.appendChild(newImage);
-    mediaCover.append(cover);
-
-    // All Text
-    const allText = document.createElement('div');
-    allText.id = "allText";
-    mediaCover.append(allText);
-
-    // Top Field
-    const topField = document.createElement('div');
-    topField.id = "topField";
-    allText.append(topField);
-
-    // Book Title
-    const title = document.createElement('span');
-    title.id = "title";
-    title.innerText = mediaObj.title;
-    topField.append(title);
-
-    // Year Published
-    const published = document.createElement('span');
-    published.id = "year";
-    published.innerText = mediaObj.first_publish_year;
-    topField.append(published);
-
-    // Text field
-    const textField = document.createElement('div');
-    textField.id = "textField";
-    allText.appendChild(textField);
-
-    // Book Author
-    const author = document.createElement('span');
-    author.id = "author";
-    author.innerText = mediaObj.author_name[0];
-    textField.appendChild(author);
-
-    // Stylizes card
-    stylize(mediaCover);
-
-
-    let container = document.getElementById('results-container');
-    container.appendChild(mediaCover);
-    // if the books array doesnt have the mediaObj, push it to the array.
-    if (!books.includes(mediaObj)) {
-        books.push(mediaObj);
-        console.log("books:");
-        console.log(books);
+    function movieSearch(title, allText) {
+        const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&apikey=6a9680f`);
+        moviePromise
+            .then(res => { return res.json() })
+            .then(data => { addMovie(data.Search[0], allText) });
     }
-}
+
+    function addMovie(data, mediaCover) {
+
+        const addAdaptation = document.createElement("div");
+        addAdaptation.classList.add("adaptation");
+        mediaCover.appendChild(addAdaptation);
+
+
+        const info = document.createElement("div");
+        addAdaptation.appendChild(info);
+
+        const moviePoster = document.createElement("img");
+        moviePoster.classList.add("moviePoster");
+        moviePoster.src = data.Poster;
+        info.appendChild(moviePoster);
+
+        const movieTitle = document.createElement("span");
+        movieTitle.classList.add("movieTitle");
+        movieTitle.innerText = data.Title;
+        info.appendChild(movieTitle);
+
+        const releaseYear = document.createElement("span");
+        releaseYear.classList.add("releaseYear");
+        releaseYear.innerText = data.Year;
+        info.appendChild(releaseYear);
+
+        console.log(data);
+    }
 
 
 
     // This function is used to stylize cards (results)
     function stylize(mediaCover) {
-    const cover = mediaCover.childNodes[0];
-    const allText = mediaCover.childNodes[1];
+        const cover = mediaCover.childNodes[0];
+        const allText = mediaCover.childNodes[1];
 
-    const topField = allText.childNodes[0];
-    const textField = allText.childNodes[1];
+        const topField = allText.childNodes[0];
+        const textField = allText.childNodes[1];
 
-    const title = topField.childNodes[0];
-    const year = topField.childNodes[1];
+        const title = topField.childNodes[0];
+        const year = topField.childNodes[1];
 
-    const author = textField.childNodes[0];
+        const author = textField.childNodes[0];
 
-    const newImage = cover.childNodes[0];
+        const newImage = cover.childNodes[0];
 
-    topField.classList.add('top-field');
-    mediaCover.classList.add('media-cover');
-    cover.classList.add('cover');
-    newImage.classList.add('new-image');
-    allText.classList.add('all-text');
-    year.classList.add('year');
-    title.classList.add('title');
-    author.classList.add('author');
-}
+        topField.classList.add('top-field');
+        mediaCover.classList.add('media-cover');
+        cover.classList.add('cover');
+        newImage.classList.add('new-image');
+        allText.classList.add('all-text');
+        year.classList.add('year');
+        title.classList.add('title');
+        author.classList.add('author');
+    }
 
 
     // CARD MAKER FUNCTIONS END HERE
@@ -180,7 +162,7 @@ const bookCardMaker = (mediaObj) => {
         return { title, year };
     }
 
-// SORTING AND FILTERING FUNCTIONALITY ENDS HERE
+    // SORTING AND FILTERING FUNCTIONALITY ENDS HERE
     // SEARCH HANDLING FUNCTIONALITY BEGINS HERE
 
     // When Search Button is Clicked
@@ -196,7 +178,7 @@ const bookCardMaker = (mediaObj) => {
             resultsSection.removeChild(existingFilterResultsDiv);
         }
 
-    resultsSection.insertBefore(filterResultsDiv, resultsContainer);
+        resultsSection.insertBefore(filterResultsDiv, resultsContainer);
 
 
         // flags for the search:
@@ -262,7 +244,6 @@ const bookCardMaker = (mediaObj) => {
             console.log(title);
             let link = 'https://openlibrary.org/search.json?q=';
             bookSearch(title, link);
-            movieSearch(title);
 
         }
         if (authorFlag == true) {
@@ -299,91 +280,76 @@ const bookCardMaker = (mediaObj) => {
 
     // Function to search for books, takes in the link and the data to search for.
     const bookSearch = (data, link) => {
-    const fetchPromises = [];
+        const fetchPromises = [];
 
-    for (let i = 0; i < 30; i++) {
-        fetchPromises.push(
-            fetch(`${link}${data}&limit=30&fields=title,type,author_name,first_publish_year,cover_i`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.docs[i]) {
-                        bookCardMaker(data.docs[i]);
-                    }
-                })
-        );
-    }
-
-    Promise.all(fetchPromises).then(() => {
-        console.log('All book fetch requests completed');
-    });
-};
-
-
-    const movieSearch = title => {
         for (let i = 0; i < 30; i++) {
-            const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&apikey=6a9680f`);
-            moviePromise
-                .then(res => { return res.json() })
-                .then(data => { movieCardMaker(data.Search[i]) });
+            fetchPromises.push(
+                fetch(`${link}${data}&limit=30&fields=title,type,author_name,first_publish_year,cover_i`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.docs[i]) {
+                            bookCardMaker(data.docs[i]);
+                        }
+                    })
+            );
         }
-        // thisj fsdjfnodsnfskfnkosnpdfmsepfmdsfk;
-    }
 
-    const movieYearSearch = (year) => {
-        for (let i = 0; i < 30; i++) {
-            const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&y=${year}&apikey=6a9680f`);
-            moviePromise
-                .then(res => { return res.json() })
-                .then(data => { movieCardMaker(data.Search[i]) });
-        }
-    }
+        Promise.all(fetchPromises).then(() => {
+            console.log('All book fetch requests completed');
 
-// SEARCH HANDLING FUNCTIONALITY ENDS HERE
-    
+
+        });
+
+
+
+    };
+
+    // SEARCH HANDLING FUNCTIONALITY ENDS HERE
+
     // Function to create filter-results div
-function createFilterResultsDiv() {
-    const filterResultsDiv = document.createElement('div');
-    filterResultsDiv.className = 'filter-results';
+    function createFilterResultsDiv() {
+        const filterResultsDiv = document.createElement('div');
+        filterResultsDiv.className = 'filter-results';
 
-    const h2 = document.createElement('h2');
-    h2.textContent = 'Results';
-    filterResultsDiv.appendChild(h2);
+        const h2 = document.createElement('h2');
+        h2.textContent = 'Results';
+        filterResultsDiv.appendChild(h2);
 
-    const optionsDiv = document.createElement('div');
-    optionsDiv.className = 'options';
-    filterResultsDiv.appendChild(optionsDiv);
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        filterResultsDiv.appendChild(optionsDiv);
 
-    const label = document.createElement('label');
-    label.setAttribute('for', 'filter-results');
-    label.textContent = 'Sort by: ';
-    optionsDiv.appendChild(label);
+        const label = document.createElement('label');
+        label.setAttribute('for', 'filter-results');
+        label.textContent = 'Sort by: ';
+        optionsDiv.appendChild(label);
 
-    const options = document.createElement('options');
-    optionsDiv.appendChild(options);
+        const options = document.createElement('options');
+        optionsDiv.appendChild(options);
 
-    const select = document.createElement('select');
-    select.id = 'filter-results';
-    options.appendChild(select);
+        const select = document.createElement('select');
+        select.id = 'filter-results';
+        options.appendChild(select);
 
-    const optionValues = ['alphabetical', 'oldest', 'newest', 'reverse-alphabetical'];
-    const optionTexts = ['A-Z', 'Old -> New', 'New -> Old', 'Z-A'];
+        const optionValues = ['alphabetical', 'oldest', 'newest', 'reverse-alphabetical'];
+        const optionTexts = ['A-Z', 'Old -> New', 'New -> Old', 'Z-A'];
 
-    for (let i = 0; i < optionValues.length; i++) {
-        const option = document.createElement('option');
-        option.value = optionValues[i];
-        option.textContent = optionTexts[i];
-        select.appendChild(option);
+        for (let i = 0; i < optionValues.length; i++) {
+            const option = document.createElement('option');
+            option.value = optionValues[i];
+            option.textContent = optionTexts[i];
+            select.appendChild(option);
+        }
+
+        // Add the event listener for the filter type dropdown
+        select.addEventListener('change', handleFilterChange);
+
+        return filterResultsDiv;
     }
 
-    // Add the event listener for the filter type dropdown
-    select.addEventListener('change', handleFilterChange);
-
-    return filterResultsDiv;
-}
-
-// Function to handle filter change
-function handleFilterChange() {
-    const filterValue = document.getElementById('filter-results').value;
+    // Function to handle filter change
+    function handleFilterChange() {
+        const filterValue = document.getElementById('filter-results').value;
         everything = [...books, ...movies, ...shows];
         console.log("Everything");
         console.log(everything);
@@ -391,15 +357,15 @@ function handleFilterChange() {
         if (filterValue == "alphabetical") {
             // filter the results in alphabetical order.
             everything.sort(function (a, b) {
-            const titleA = getTitleAndYear(a).title;
-            const titleB = getTitleAndYear(b).title;
-            if (titleA < titleB) {
-                return -1;
-            }
-            if (titleA > titleB) {
-                return 1;
-            }
-            return 0;
+                const titleA = getTitleAndYear(a).title;
+                const titleB = getTitleAndYear(b).title;
+                if (titleA < titleB) {
+                    return -1;
+                }
+                if (titleA > titleB) {
+                    return 1;
+                }
+                return 0;
             });
         }
         else if (filterValue == "oldest") {
@@ -445,7 +411,7 @@ function handleFilterChange() {
                 movieCardMaker(everything[i], true);
             }
         }
-}
+    }
 
 
 
