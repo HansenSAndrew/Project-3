@@ -36,7 +36,7 @@ window.addEventListener('load', function () {
     const allText = document.createElement('div');
     allText.id = "allText";
     mediaCover.append(allText);
-
+        // djfdijnds
     // Top Field
     const topField = document.createElement('div');
     topField.id = "topField";
