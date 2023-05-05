@@ -282,7 +282,7 @@ window.addEventListener('load', function () {
     const bookSearch = (data, link) => {
         const fetchPromises = [];
 
-        for (let i = 0; i < 300; i++) {
+        for (let i = 0; i < 30; i++) {
             fetchPromises.push(
                 fetch(`${link}${data}&limit=300&fields=title,type,author_name,first_publish_year,cover_i`)
                     .then(res => res.json())
