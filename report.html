@@ -1,65 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style>
+			li {
+				padding: 10px;
+			}
+		</style>
+		<title>Report</title>
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        li {
-            padding: 10px;
-        }
-    </style>
-    <title>Report</title>
-</head>
+	<body>
+		<h1>Report for Project 3</h1>
 
-<body>
-    <h1>
-        Report for Project 3
-    </h1>
-
-    <ul>
-        <li>
-            Link to the deployed version of our app:
-            <ul>
-                <li>
-                    <a href="https://hansensandrew.github.io/Project-3/">Our Project</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            What our app does:
-            <ul>
-                <li>
-                    There are many movies adapted from books. Using free APIs, we created
-                    a website that can find if there is a movie based on a book by its title.
-                </li>
-            </ul>
-        </li>
-        <li>
-            Requirements:
-            <ul>
-                <li>
-                    Does your site (or "app") for this project deploy publicly?
-                </li>
-                <li>
-                    Does your site have varying presentaion on mobile and on larger viewports?
-                </li>
-                <li>
-                    Does your site use at least 2 existing APIs to create functionality?
-                </li>
-                <li>
-                    Does your app have some kind of search?
-                </li>
-                <li>
-                    Does your app display the results of the search?
-                </li>
-                <li>
-                    Can the vistor filter, sort, or manipulate the results given?
-                </li>
-            </ul>
-        </li>
-    </ul>
-</body>
-
+		<ul>
+			<li>
+				Link to the deployed version of our app:
+				<ul>
+					<li>
+						<a href="https://hansensandrew.github.io/Project-3/">Our Project</a>
+					</li>
+				</ul>
+			</li>
+			<li>
+				What our app does:
+				<ul>
+					<li>
+						There are many movies adapted from books. Using free APIs, we
+						created a website that can find if there is a movie based on a book
+						by its title.
+					</li>
+				</ul>
+			</li>
+			<li>
+				Requirements:
+				<ul>
+					<li>
+						Does your site (or "app") for this project deploy publicly? Yes, our
+						site is deployed on github via github pages.
+					</li>
+					<li>
+						Does your site have varying presentaion on mobile and on larger
+						viewports?
+						<p class="response">
+							Yes, our site has two presentations, one is for desktop browsers
+							(larger than 950px in width) and the other is for mobile or tablet
+							browsers (less than 950px in width).
+						</p>
+					</li>
+					<li>
+						Does your site use at least 2 existing APIs to create functionality?
+						<p class="response">
+							Yes, our site uses two API's, one is the openlibrary api which
+							stores a collection of books and book related items (book box
+							sets, themed bookmarks, etc) and the other is the omdb api which
+							stores a collection of movies and movie related items (tv shows,
+							video games, etc).
+						</p>
+					</li>
+					<li>
+						Does your app have some kind of search?
+						<p class="response">
+							Yes, our site prompts the user to search for books via title,
+							author, or dates. However, the API does not support by both title
+							and dates, or author and dates, so if you fill all three fields,
+							the search will run twice, once for the author and title, and a
+							second time for the date range.
+						</p>
+					</li>
+					<li>
+						Does your app display the results of the search?
+						<p class="response">
+							Yes, our site appends the results of the search to a div element
+							that expands dynamically to fit the number of results.
+						</p>
+					</li>
+					<li>
+						Can the vistor filter, sort, or manipulate the results given?
+						<p class="response">
+							Yes, the site allows users to filter results in 4 different ways.
+							The results can be filtered alphabetically by title, reverse
+							alphabetically by title, from oldest publication date to newest,
+							and from newest publication date to oldest.
+						</p>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</body>
 </html>
