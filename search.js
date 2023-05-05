@@ -83,7 +83,7 @@ window.addEventListener('load', function () {
     }
 
     function movieSearch(title, allText) {
-        const moviePromise = fetch(`http://www.omdbapi.com/?s=${title}&apikey=6a9680f`);
+        const moviePromise = fetch(`https://www.omdbapi.com/?s=${title}&apikey=6a9680f`);
         moviePromise
             .then(res => { return res.json() })
             .then(data => { addMovie(data.Search[0], allText) });
